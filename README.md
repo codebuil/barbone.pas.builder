@@ -1,3 +1,3 @@
-# llvm2x86
+# arm.decompile
+decompile any arm code
 
-low level virtual machine into x86
