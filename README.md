@@ -1,3 +1,4 @@
-# arm.decompile
-decompile any arm code
+# barbone.pas.compile
+
+barbone pascal compile
 
