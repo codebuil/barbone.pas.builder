@@ -1,16 +1,14 @@
 Library kernel;
+uses 
+    libU;
 procedure mains;cdecl;
 var
-        i: Integer;
-        scr: PChar = PChar($b8000);       
+            p: PChar ='hello world \n';
 
 begin
-
-        for i := 0 to 2000 do
-        begin
-               scr[i*2] := #65;
-               scr[i*2+1] :=#103;
-        end;
+        clear();
+        locate(10,10);
+        print(p);
                
                
 end;

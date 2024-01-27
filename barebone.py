@@ -48,13 +48,14 @@ class BareboneBuilder:
         self.execute_command("mv -f ppas.sh /tmp/null",False)
         self.execute_command("mv -f link.res /tmp/null",False)
         self.execute_command("nasm -felf32 -o /tmp/boot.o ./file/boot.s",True)
+        self.execute_command("gcc -c ./file/base.c  -o lib.o -nostdlib",True)
         fff=f'fpc -Cn -CcCDECL -O2 -Xs -Xs -Xt -Pi386 -Tlinux "$1"'.replace("$1",filename)
         
         self.execute_command(fff,True)
         self.execute_command("mv -f ppas.sh /tmp",False)
         self.execute_command("mv -f link.res /tmp",False)
         self.execute_command("mv -f ./kernel.o /tmp",False)
-        self.execute_command("gcc ./file/link.ld /tmp/boot.o /tmp/kernel.o -o /tmp/kernel.bin -nostdlib",True)
+        self.execute_command("gcc ./file/link.ld /tmp/boot.o ./lib.o /tmp/kernel.o -o /tmp/kernel.bin -nostdlib",True)
         self.execute_command("grub-file --is-x86-multiboot /tmp/kernel.bin",True)
         self.execute_command("mv -f /tmp/kernel.bin ./",True)
 
