@@ -57,12 +57,14 @@ class BareboneBuilder:
         self.execute_command("mv -f ./kernel.o /tmp",False)
         self.execute_command("gcc ./file/link.ld /tmp/boot.o ./lib.o /tmp/kernel.o -o /tmp/kernel.bin -nostdlib",True)
         self.execute_command("grub-file --is-x86-multiboot /tmp/kernel.bin",True)
-        self.execute_command("mv -f /tmp/kernel.bin ./",True)
-
+        #self.execute_command("mv -f /tmp/kernel.bin ./",True)
+        self.execute_command("mkdir -p ./file/isodir/boot/grub",True)
+        self.execute_command("cp /tmp/kernel.bin ./file/isodir/boot/kernel.bin",True)
+        self.execute_command("cp ./file/grub.cfg ./file/isodir/boot/grub/grub.cfg",True)
+        self.execute_command("grub-mkrescue -o myos.iso ./file/isodir",True)
     def run_kernel(self):
         self.text_area.delete(1.0, tk.END)
-        self.execute_command("qemu-system-i386 -kernel kernel.bin",True)
-
+        self.execute_command("qemu-system-i386 -serial msmouse -cdrom myos.iso",True)
     def copy_file(self):
         self.text_area.delete(1.0, tk.END)
         filename = tk.filedialog.asksaveasfilename(title="Select file")
